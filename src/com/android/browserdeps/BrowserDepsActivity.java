@@ -2,7 +2,6 @@ package com.android.browserdeps;
 
 import java.util.List;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,8 +14,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.util.Log;
-import android.view.View;
 
 public class BrowserDepsActivity extends PreferenceActivity {
 
@@ -118,8 +115,8 @@ public class BrowserDepsActivity extends PreferenceActivity {
         /* заполняем массивы, исключая само приложение */
         for(int i = 0; i < browserlist.size(); i++) {
         	if(!browserlist.get(i).activityInfo.packageName.equals(getPackageName())) {
-	        	browserLabels[i] = (CharSequence)getPackageManager().getApplicationLabel(browserlist.get(i).activityInfo.applicationInfo);
-	        	browserPackages[i] = (CharSequence)browserlist.get(i).activityInfo.packageName;
+	        	browserLabels[i] = getPackageManager().getApplicationLabel(browserlist.get(i).activityInfo.applicationInfo);
+	        	browserPackages[i] = browserlist.get(i).activityInfo.packageName;
         	}
         	else if(i != browserlist.size() - 1)
         		i--;
