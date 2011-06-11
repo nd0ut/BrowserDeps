@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BrowserDeps</string><string name="MainSettings">Main Settings</string>
+    
+    
+    <string name="Developed">Developed by nd0ut</string><string name="About">About</string><string name="tSetAsDefault">Set default browser</string>
+    <string name="sSetAsDefault">Check &quot;Use by default for this action&quot; and tap BrowserDeps</string>
+    
+	<string name="tWifi">Wi-fi</string>
+    <string name="sWifi">Will be launched when wi-fi connected</string>
+    
+    <string name="tMobile">Mobile network</string>
+    <string name="sMobile">Will be launched when mobile network connected</string>
+    
+    <string name="tWimax">Wimax</string>
+    <string name="sWimax">Will be launched when wimax connected</string>
+    
+    <string name="tOffline">Offline</string>
+    <string name="sOffline">Will be launched when there is no any connected network</string>
+    
+    
+    
+    
+</resources>

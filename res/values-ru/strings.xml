@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="MainSettings">Основные настройки</string>
+    <string name="About">О программе</string>
+    <string name="Developed">Разработал nd0ut</string>
+    
+    <string name="tSetAsDefault">Выбрать браузер по умолчанию</string>
+    <string name="sSetAsDefault">Выберите пункт &quot;По умолчанию для этого действия&quot; и нажмите на BrowserDeps</string>
+    
+	<string name="tWifi">Wi-fi</string>
+    <string name="sWifi">Браузер для wi-fi сетей</string>
+    
+    <string name="tMobile">Mobile network</string>
+    <string name="sMobile">Браузер для мобильного интернета - GPRS, EDGE, 3G</string>
+    
+    <string name="tWimax">Wimax</string>
+    <string name="sWimax">Браузер для Wimax сетей</string>
+    
+    <string name="tOffline">Offline</string>
+    <string name="sOffline">Браузер для offline-режима</string>
+</resources>

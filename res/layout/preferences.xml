@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+		<PreferenceCategory
+                android:title="Main settings">
+                <Preference
+                		android:title="@string/tSetAsDefault" 
+                		android:summary="@string/sSetAsDefault"
+                		android:key="setasdef" />
+                <ListPreference
+                        android:title="@string/tWifi"
+                        android:summary="@string/sWifi"
+                        android:key="wifi" />
+                <ListPreference
+                        android:title="@string/tMobile"
+                        android:summary="@string/sMobile"
+                        android:key="mobile" />
+                <ListPreference
+                        android:title="@string/tWimax"
+                        android:summary="@string/sWimax"
+                        android:key="wimax" />
+                <ListPreference
+                        android:title="@string/tOffline"
+                        android:summary="@string/sOffline"
+                        android:key="offline" />
+        </PreferenceCategory>
+        <PreferenceCategory
+        		android:title="@string/About">
+        		<Preference
+        				android:title="@string/Developed"
+        				android:summary="nd0ut.me@gmail.com"
+        				android:key="developed" />
+        </PreferenceCategory>
+</PreferenceScreen>
