@@ -84,7 +84,7 @@ public class BrowserDepsActivity extends PreferenceActivity {
         	int conType = GetActiveConnectionType(); //получаем тип соединения
         	
         	if(debug)
-        		Toast.makeText(getBaseContext(), "Connection type: " + Integer.toString(conType), Toast.LENGTH_LONG);
+        		Toast.makeText(getBaseContext(), "Connection type: " + Integer.toString(conType), Toast.LENGTH_LONG).show();
         	
         	if(conType == TYPE_MOBILE ||
         			conType == TYPE_MOBILE_DUN || 
@@ -105,7 +105,7 @@ public class BrowserDepsActivity extends PreferenceActivity {
         	intent.setPackage(browserPackage);
         	
         	if(debug)
-        		Toast.makeText(getBaseContext(), "Package: " + browserPackage, Toast.LENGTH_LONG);
+        		Toast.makeText(getBaseContext(), "Package: " + browserPackage, Toast.LENGTH_LONG).show();
             
         	startActivity(intent);
         	finish();
