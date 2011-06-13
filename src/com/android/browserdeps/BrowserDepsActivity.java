@@ -14,6 +14,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.widget.Toast;
 
 public class BrowserDepsActivity extends PreferenceActivity {
 
@@ -75,15 +76,20 @@ public class BrowserDepsActivity extends PreferenceActivity {
         
         else if(getIntent().getData() != null) {
         	SharedPreferences sp = getPreferenceManager().getSharedPreferences();
+        	boolean debug = sp.getBoolean("debug", false);
 
         	Intent intent = new Intent(Intent.ACTION_VIEW, getIntent().getData());
         	String browserPackage = null;
         	
         	int conType = GetActiveConnectionType(); //получаем тип соединения
-        	if(conType == TYPE_MOBILE && 
-        			conType == TYPE_MOBILE_DUN && 
-        			conType == TYPE_MOBILE_HIPRI && 
-        			conType == TYPE_MOBILE_MMS &&
+        	
+        	if(debug)
+        		Toast.makeText(getBaseContext(), "Connection type: " + Integer.toString(conType), Toast.LENGTH_LONG);
+        	
+        	if(conType == TYPE_MOBILE ||
+        			conType == TYPE_MOBILE_DUN || 
+        			conType == TYPE_MOBILE_HIPRI || 
+        			conType == TYPE_MOBILE_MMS ||
         			conType == TYPE_MOBILE_SUPL)
         		browserPackage = sp.getString("mobile", "com.android.browser");	
         	
@@ -97,6 +103,9 @@ public class BrowserDepsActivity extends PreferenceActivity {
         		browserPackage = sp.getString("offline", "com.android.browser");
         	
         	intent.setPackage(browserPackage);
+        	
+        	if(debug)
+        		Toast.makeText(getBaseContext(), "Package: " + browserPackage, Toast.LENGTH_LONG);
             
         	startActivity(intent);
         	finish();

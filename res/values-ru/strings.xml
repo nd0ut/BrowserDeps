@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="MainSettings">Основные настройки</string>
-    <string name="About">О программе</string>
-    <string name="Developed">Разработал nd0ut</string>
+    <string name="main">Основные настройки</string>
+    <string name="other">Другое</string>
+    <string name="developed">Разработал nd0ut</string>
     
     <string name="tSetAsDefault">Выбрать браузер по умолчанию</string>
     <string name="sSetAsDefault">Выберите пункт &quot;По умолчанию для этого действия&quot; и нажмите на BrowserDeps</string>
@@ -18,4 +18,5 @@
     
     <string name="tOffline">Offline</string>
     <string name="sOffline">Браузер для offline-режима</string>
+    <string name="debug">Режим отладки</string>
 </resources>

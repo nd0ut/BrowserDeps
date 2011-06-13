@@ -24,9 +24,12 @@
                         android:key="offline" />
         </PreferenceCategory>
         <PreferenceCategory
-        		android:title="@string/About">
+        		android:title="@string/other">
+        		<CheckBoxPreference
+        				android:title="@string/debug"
+        				android:key="debug" />
         		<Preference
-        				android:title="@string/Developed"
+        				android:title="@string/developed"
         				android:summary="nd0ut.me@gmail.com"
         				android:key="developed" />
         </PreferenceCategory>
