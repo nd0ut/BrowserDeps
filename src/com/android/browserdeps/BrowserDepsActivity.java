@@ -82,10 +82,7 @@ public class BrowserDepsActivity extends PreferenceActivity {
         	String browserPackage = null;
         	
         	int conType = GetActiveConnectionType(); //получаем тип соединения
-        	
-        	if(debug)
-        		Toast.makeText(getBaseContext(), "Connection type: " + Integer.toString(conType), Toast.LENGTH_LONG).show();
-        	
+        	        	
         	if(conType == TYPE_MOBILE ||
         			conType == TYPE_MOBILE_DUN || 
         			conType == TYPE_MOBILE_HIPRI || 
@@ -104,9 +101,10 @@ public class BrowserDepsActivity extends PreferenceActivity {
         	
         	intent.setPackage(browserPackage);
         	
-        	if(debug)
-        		Toast.makeText(getBaseContext(), "Package: " + browserPackage, Toast.LENGTH_LONG).show();
-            
+        	if(debug) 
+        		Toast.makeText(getBaseContext(), "Connection type: " + Integer.toString(conType) + 
+        				"\nPackage: " + browserPackage, Toast.LENGTH_LONG).show();
+        	
         	startActivity(intent);
         	finish();
         } else
@@ -160,7 +158,7 @@ public class BrowserDepsActivity extends PreferenceActivity {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netinfo = cm.getActiveNetworkInfo();
         
-        if(netinfo != null && netinfo.isConnected()) 
+        if(netinfo != null) 
         	return netinfo.getType();
         else
         	return TYPE_NOT_CONNECTED;
