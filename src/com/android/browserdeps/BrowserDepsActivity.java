@@ -1,8 +1,5 @@
 package com.android.browserdeps;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -12,12 +9,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
@@ -27,7 +21,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 public class BrowserDepsActivity extends PreferenceActivity {
@@ -182,6 +175,9 @@ public class BrowserDepsActivity extends PreferenceActivity {
     }
     
     private void CheckForUpdates() {
+    	SharedPreferences sp = getPreferenceManager().getSharedPreferences();
+    	boolean debug = sp.getBoolean("debug", false);
+    	
     	try {
     		Toast.makeText(getBaseContext(), "Checking updates...", 100).show();
     		
@@ -195,6 +191,10 @@ public class BrowserDepsActivity extends PreferenceActivity {
     		
     		int upd_code = Integer.parseInt(code.getNodeValue());
     		int cur_code = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+    		
+        	if(debug) 
+        		Toast.makeText(getBaseContext(), "Current vercode: " + Integer.toString(cur_code) + 
+        				"\nLast vercode: " + Integer.toString(upd_code), Toast.LENGTH_LONG).show();
     		
     		if(upd_code > cur_code) {
     			Node ver = attributes.getNamedItem("android:versionName");
