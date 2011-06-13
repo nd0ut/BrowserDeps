@@ -1,10 +1,23 @@
 package com.android.browserdeps;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
@@ -14,6 +27,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 public class BrowserDepsActivity extends PreferenceActivity {
@@ -54,12 +68,15 @@ public class BrowserDepsActivity extends PreferenceActivity {
 			        getPackageManager().clearPackagePreferredActivities(getPackageName()); //очищаем браузер по-умолчанию
 			        
 			        startActivity(intent); //показываем диалог выбора
-				}
+				} else if(pref.getKey().equals("updates"))
+					CheckForUpdates();
+				
 				return true;
 			}
 		};
 		
 		getPreferenceScreen().findPreference("setasdef").setOnPreferenceClickListener(onclick);
+		getPreferenceScreen().findPreference("updates").setOnPreferenceClickListener(onclick);
     }
     
     /** Вызывается при запуске приложения */
@@ -162,5 +179,33 @@ public class BrowserDepsActivity extends PreferenceActivity {
         	return netinfo.getType();
         else
         	return TYPE_NOT_CONNECTED;
+    }
+    
+    private void CheckForUpdates() {
+    	try {
+    		Toast.makeText(getBaseContext(), "Checking updates...", 100).show();
+    		
+    		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    		DocumentBuilder db = dbf.newDocumentBuilder();
+    		Document doc = db.parse(new URL("https://raw.github.com/nd0ut/BrowserDeps/master/AndroidManifest.xml").openStream());
+			
+    		Node node = doc.getFirstChild();
+    		NamedNodeMap attributes = node.getAttributes();
+    		Node code = attributes.getNamedItem("android:versionCode");
+    		
+    		int upd_code = Integer.parseInt(code.getNodeValue());
+    		int cur_code = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+    		
+    		if(upd_code > cur_code) {
+    			Node ver = attributes.getNamedItem("android:versionName");
+    			String upd_ver = ver.getNodeValue();
+    			
+    			Toast.makeText(getBaseContext(), "New version available!", Toast.LENGTH_SHORT).show();
+    		}
+    		else
+    			Toast.makeText(getBaseContext(), "There is no new version :(", Toast.LENGTH_SHORT).show();
+		} catch (Exception e) {
+			Toast.makeText(getBaseContext(), "There is some problem", Toast.LENGTH_LONG).show();
+		}   	
     }
 }

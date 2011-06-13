@@ -19,4 +19,5 @@
     <string name="tOffline">Offline</string>
     <string name="sOffline">Браузер для offline-режима</string>
     <string name="debug">Режим отладки</string>
+    <string name="updates">Проверить обновления</string>
 </resources>

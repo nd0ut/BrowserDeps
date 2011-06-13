@@ -18,6 +18,7 @@
     <string name="tOffline">Offline</string>
     <string name="sOffline">Will be launched when there is no any connected network</string>
     <string name="debug">Debug mode</string>
+    <string name="updates">Check for updates</string>
     
     
     

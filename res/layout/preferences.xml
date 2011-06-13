@@ -29,6 +29,9 @@
         				android:title="@string/debug"
         				android:key="debug" />
         		<Preference
+        				android:title="@string/updates"
+        				android:key="updates" />
+        		<Preference
         				android:title="@string/developed"
         				android:summary="nd0ut.me@gmail.com"
         				android:key="developed" />
