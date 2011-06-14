@@ -24,6 +24,7 @@
     <string name="nonewver">There is no new version :(</string>
     <string name="checkingupd">Checking...</string>
     <string name="nobrowser">No browser selected for this connection</string>
+    <string name="sendme">Send email</string>
     
     
     

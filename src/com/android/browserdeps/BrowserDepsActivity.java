@@ -67,6 +67,13 @@ public class BrowserDepsActivity extends PreferenceActivity {
 			        startActivity(intent); //показываем диалог выбора
 				} else if(pref.getKey().equals("updates"))
 					CheckForUpdates();
+				else if(pref.getKey().equals("developed")) {
+			        Intent intent = new Intent(Intent.ACTION_SEND);
+			        intent.setType("plain/text").putExtra(Intent.EXTRA_EMAIL, new String[]{"nd0ut.me@gmail.com"});
+			        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "BrowserDeps");
+
+			        startActivity(intent);
+				}
 				
 				return true;
 			}
@@ -74,6 +81,7 @@ public class BrowserDepsActivity extends PreferenceActivity {
 		
 		getPreferenceScreen().findPreference("setasdef").setOnPreferenceClickListener(onclick);
 		getPreferenceScreen().findPreference("updates").setOnPreferenceClickListener(onclick);
+		getPreferenceScreen().findPreference("developed").setOnPreferenceClickListener(onclick);
     }
     
     /** Вызывается при запуске приложения */
@@ -211,7 +219,7 @@ public class BrowserDepsActivity extends PreferenceActivity {
     		
         	if(debug) 
         		Toast.makeText(getBaseContext(), "Current version: " + cur_ver + 
-        				"\nLast vercode: " + upd_ver, Toast.LENGTH_LONG).show();
+        				"\nLast version: " + upd_ver, Toast.LENGTH_LONG).show();
     		
     		if(!upd_ver.equals(cur_ver)) {
     			Toast.makeText(getBaseContext(), getString(R.string.newver), Toast.LENGTH_SHORT).show();

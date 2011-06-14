@@ -25,4 +25,5 @@
     <string name="nonewver">Новой версии нет :(</string>
     <string name="checkingupd">Проверяю...</string>
     <string name="nobrowser">Не выбрано ни одного браузера для данного типа соединения</string>
+    <string name="sendme">Послать письмо</string>
 </resources>

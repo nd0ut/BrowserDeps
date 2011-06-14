@@ -33,7 +33,7 @@
         				android:key="updates" />
         		<Preference
         				android:title="@string/developed"
-        				android:summary="nd0ut.me@gmail.com"
+        				android:summary="@string/sendme"
         				android:key="developed" />
         </PreferenceCategory>
 </PreferenceScreen>
