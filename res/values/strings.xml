@@ -19,6 +19,11 @@
     <string name="sOffline">Will be launched when there is no any connected network</string>
     <string name="debug">Debug mode</string>
     <string name="updates">Check for updates</string>
+    <string name="conerror">Connection error</string>
+    <string name="newver">New version is available!</string>
+    <string name="nonewver">There is no new version :(</string>
+    <string name="checkingupd">Checking...</string>
+    <string name="nobrowser">No browser selected for this connection</string>
     
     
     

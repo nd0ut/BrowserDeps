@@ -20,4 +20,9 @@
     <string name="sOffline">Браузер для offline-режима</string>
     <string name="debug">Режим отладки</string>
     <string name="updates">Проверить обновления</string>
+    <string name="conerror">Проблема с подключением к серверу</string>
+    <string name="newver">Доступная новая версия!</string>
+    <string name="nonewver">Новой версии нет :(</string>
+    <string name="checkingupd">Проверяю...</string>
+    <string name="nobrowser">Не выбрано ни одного браузера для данного типа соединения</string>
 </resources>

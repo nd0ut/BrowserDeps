@@ -21,6 +21,8 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 public class BrowserDepsActivity extends PreferenceActivity {
@@ -35,6 +37,8 @@ public class BrowserDepsActivity extends PreferenceActivity {
 	private static final int TYPE_WIMAX = 6;
 	
 	private boolean PreferencesShowed = false;
+	
+	private SharedPreferences sp = null;
 	
 	/** Показывает настройки */
     public void ShowPreferences() {
@@ -77,6 +81,8 @@ public class BrowserDepsActivity extends PreferenceActivity {
     public void onStart() {
         super.onStart();
         
+        sp = getPreferenceManager().getSharedPreferences();
+        
         /* Проверяем интент
          * Если послан собой, то завершаемся
          * Если чем-то другим, то запускаем нужный браузер с интентом
@@ -84,9 +90,8 @@ public class BrowserDepsActivity extends PreferenceActivity {
         if(getIntent().getBooleanExtra("by self", false) == true)
         	finish();
         
-        else if(getIntent().getData() != null) {
+        if(getIntent().getData() != null) {
         	SharedPreferences sp = getPreferenceManager().getSharedPreferences();
-        	boolean debug = sp.getBoolean("debug", false);
 
         	Intent intent = new Intent(Intent.ACTION_VIEW, getIntent().getData());
         	String browserPackage = null;
@@ -98,25 +103,25 @@ public class BrowserDepsActivity extends PreferenceActivity {
         			conType == TYPE_MOBILE_HIPRI || 
         			conType == TYPE_MOBILE_MMS ||
         			conType == TYPE_MOBILE_SUPL)
-        		browserPackage = sp.getString("mobile", "com.android.browser");	
+        		browserPackage = sp.getString("mobile", null);	
         	
         	else if(conType == TYPE_WIFI)
-        		browserPackage = sp.getString("wifi", "com.android.browser");
+        		browserPackage = sp.getString("wifi", null);
         	
         	else if(conType == TYPE_WIMAX)
-        		browserPackage = sp.getString("wimax", "com.android.browser");
+        		browserPackage = sp.getString("wimax", null);
         	
         	else 
-        		browserPackage = sp.getString("offline", "com.android.browser");
+        		browserPackage = sp.getString("offline", null);
         	
-        	intent.setPackage(browserPackage);
-        	
-        	if(debug) 
-        		Toast.makeText(getBaseContext(), "Connection type: " + Integer.toString(conType) + 
-        				"\nPackage: " + browserPackage, Toast.LENGTH_LONG).show();
-        	
-        	startActivity(intent);
-        	finish();
+        	if(browserPackage != null) {
+	        	intent.setPackage(browserPackage);
+	        	
+	        	startActivity(intent);
+	        	finish();
+        	}
+        	else
+        		Toast.makeText(getBaseContext(), getString(R.string.nobrowser), Toast.LENGTH_LONG).show();
         } else
         	ShowPreferences(); //показываем настройки
     }
@@ -165,21 +170,33 @@ public class BrowserDepsActivity extends PreferenceActivity {
 
     /** Возвращает тип текущего соединения */
     private int GetActiveConnectionType() {
+    	boolean debug = sp.getBoolean("debug", false);
+    	
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netinfo = cm.getActiveNetworkInfo();
         
+        int res;
+        
         if(netinfo != null) 
-        	return netinfo.getType();
+        	res = netinfo.getType();
         else
-        	return TYPE_NOT_CONNECTED;
+        	res = TYPE_NOT_CONNECTED;
+        
+    	if(debug) {
+    		Toast toast = Toast.makeText(getBaseContext(), "Connection type: " + Integer.toString(res), Toast.LENGTH_LONG);
+    		toast.setGravity(Gravity.CENTER, 0, 0);
+    		toast.show();
+    	}
+    	
+    	return res;
     }
     
+    /** Проверка обновлений */
     private void CheckForUpdates() {
-    	SharedPreferences sp = getPreferenceManager().getSharedPreferences();
     	boolean debug = sp.getBoolean("debug", false);
     	
     	try {
-    		Toast.makeText(getBaseContext(), "Checking updates...", 100).show();
+    		Toast.makeText(getBaseContext(), "getString(R.string.checkingupd)", 100).show();
     		
     		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     		DocumentBuilder db = dbf.newDocumentBuilder();
@@ -197,15 +214,24 @@ public class BrowserDepsActivity extends PreferenceActivity {
         				"\nLast vercode: " + Integer.toString(upd_code), Toast.LENGTH_LONG).show();
     		
     		if(upd_code > cur_code) {
+    			Toast.makeText(getBaseContext(), getString(R.string.newver), Toast.LENGTH_SHORT).show();
+    			
     			Node ver = attributes.getNamedItem("android:versionName");
     			String upd_ver = ver.getNodeValue();
     			
-    			Toast.makeText(getBaseContext(), "New version available!", Toast.LENGTH_SHORT).show();
+    	        Intent intent = new Intent();
+    	        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+    	        intent.addCategory(Intent.CATEGORY_DEFAULT);
+    	        intent.setAction(Intent.ACTION_VIEW);
+    	        intent.setData(new Uri.Builder().build().parse("https://github.com/nd0ut/BrowserDeps/BrowserDeps" + upd_ver + ".apk"));
+    	        
+    	        startActivity(intent);    			
     		}
     		else
-    			Toast.makeText(getBaseContext(), "There is no new version :(", Toast.LENGTH_SHORT).show();
+    			Toast.makeText(getBaseContext(), getString(R.string.nonewver), Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
-			Toast.makeText(getBaseContext(), "There is some problem", Toast.LENGTH_LONG).show();
+			Log.e(getApplicationInfo().name, e.toString());
+			Toast.makeText(getBaseContext(), getString(R.string.conerror), Toast.LENGTH_LONG).show();
 		}   	
     }
 }
