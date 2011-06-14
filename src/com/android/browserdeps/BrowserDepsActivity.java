@@ -90,7 +90,7 @@ public class BrowserDepsActivity extends PreferenceActivity {
         if(getIntent().getBooleanExtra("by self", false) == true)
         	finish();
         
-        if(getIntent().getData() != null) {
+        else if(getIntent().getData() != null) {
         	SharedPreferences sp = getPreferenceManager().getSharedPreferences();
 
         	Intent intent = new Intent(Intent.ACTION_VIEW, getIntent().getData());
@@ -196,7 +196,7 @@ public class BrowserDepsActivity extends PreferenceActivity {
     	boolean debug = sp.getBoolean("debug", false);
     	
     	try {
-    		Toast.makeText(getBaseContext(), "getString(R.string.checkingupd)", 100).show();
+    		Toast.makeText(getBaseContext(), getString(R.string.checkingupd), 100).show();
     		
     		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     		DocumentBuilder db = dbf.newDocumentBuilder();
@@ -204,20 +204,17 @@ public class BrowserDepsActivity extends PreferenceActivity {
 			
     		Node node = doc.getFirstChild();
     		NamedNodeMap attributes = node.getAttributes();
-    		Node code = attributes.getNamedItem("android:versionCode");
+    		Node code = attributes.getNamedItem("android:versionName");
     		
-    		int upd_code = Integer.parseInt(code.getNodeValue());
-    		int cur_code = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+    		String upd_ver = code.getNodeValue();
+    		String cur_ver = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
     		
         	if(debug) 
-        		Toast.makeText(getBaseContext(), "Current vercode: " + Integer.toString(cur_code) + 
-        				"\nLast vercode: " + Integer.toString(upd_code), Toast.LENGTH_LONG).show();
+        		Toast.makeText(getBaseContext(), "Current version: " + cur_ver + 
+        				"\nLast vercode: " + upd_ver, Toast.LENGTH_LONG).show();
     		
-    		if(upd_code > cur_code) {
+    		if(!upd_ver.equals(cur_ver)) {
     			Toast.makeText(getBaseContext(), getString(R.string.newver), Toast.LENGTH_SHORT).show();
-    			
-    			Node ver = attributes.getNamedItem("android:versionName");
-    			String upd_ver = ver.getNodeValue();
     			
     	        Intent intent = new Intent();
     	        intent.addCategory(Intent.CATEGORY_BROWSABLE);
