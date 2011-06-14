@@ -223,7 +223,7 @@ public class BrowserDepsActivity extends PreferenceActivity {
     	        intent.addCategory(Intent.CATEGORY_BROWSABLE);
     	        intent.addCategory(Intent.CATEGORY_DEFAULT);
     	        intent.setAction(Intent.ACTION_VIEW);
-    	        intent.setData(new Uri.Builder().build().parse("https://github.com/nd0ut/BrowserDeps/BrowserDeps" + upd_ver + ".apk"));
+    	        intent.setData(new Uri.Builder().build().parse("https://github.com/downloads/nd0ut/BrowserDeps/BrowserDeps" + upd_ver + ".apk"));
     	        
     	        startActivity(intent);    			
     		}
